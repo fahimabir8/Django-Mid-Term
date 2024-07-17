@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+<div class="container d-flex mt-5">
+  <div class="card" style="width: 40rem">
+    <img src="{{ car.image.url }}" class="card-img-top" alt="..." />
+  </div>
+
+  <div class="card text-center mb-3" style="width: 25rem">
+    <div class="card-body">
+      <h3 class="card-title">{{ car.name }}</h3>
+      <p class="card-text">{{ car.description }}</p>
+      <h5>Price: {{ car.price }}</h5>
+      <h5>Quantity: {{ car.quantity }}</h5>
+      <h5>Brand: {{ car.brand }}</h5>
+      {% if user.is_authenticated %}
+      <form action="{% url 'buy_car' car.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Buy Now</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<br /><br />
+
+<div class="card">
+  <div class="card-body">
+    <h5>Total Comments: {{ comments|length }}</h5>
+    <div class="card-body">
+      {% for comment in comments %} 
+      <b>{{ comment.name }}</b>
+      <p>{{ comment.created_on }}</p>
+      <p>{{ comment.area }}</p>
+      <hr />
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post">
+      <h2>Add Comment</h2>
+      {% csrf_token %}
+      {{ comment_form|crispy }}
+      <button class="btn btn-danger">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

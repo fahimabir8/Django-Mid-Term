@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="banner-container">
+  <div class="text">
+    <br />
+    <h2>Discover Your Next Adventure on Wheels: Browse Our Latest Models</h2>
+    <br /><br />
+    <p>
+      Our mission is to make that dream a reality by offering a diverse and
+      extensive selection of both new and pre-owned vehicles. Whether you're
+      looking for the latest model with cutting-edge features or a reliable,
+      affordable used car, we have something for everyone. Our commitment to
+      quality ensures that every vehicle on our lot meets the highest standards,
+      providing you with peace of mind and exceptional value.
+    </p>
+  </div>
+</div>
+<br />
+<br />
+<h1 class="text-center">Brands</h1>
+<div class="button-grp d-flex flex-wrap justify-content-around p-5">
+  {% for brand in brands %}
+  <a href="{% url 'brand_wise_serial' brand.slug %}" class="btn btn-success"
+    >{{brand.name}}</a
+  >
+
+  {% endfor %}
+</div>
+
+<br />
+<br />
+
+<h2>Total Cars : {{cars | length }}</h2>
+<br />
+<br />
+
+<div class="card-container d-flex row mx-5">
+  {% for data in cars %}
+  <div class="card-card col-3">
+    <div class="card" style="width: 18rem">
+      <img src="{{data.image.url}}" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">{{data.name}}</h5>
+        <p class="card-text">{{data.description}}</p>
+        <h6>Price - {{data.price}}</h6>
+        <h6>Brand - {{data.brand.name}}</h6>
+        <a href="{% url 'details' data.id %}" class="btn btn-warning"
+          >Details</a
+        >
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+<br />
+<br />
+
+{% endblock %}
